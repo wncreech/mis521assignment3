@@ -9,34 +9,43 @@ namespace Betterboxd
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Add services
             builder.Services.AddControllersWithViews();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // Get connection string for Azure SQL
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            // Use SQL Server instead of SQLite
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlite(connectionString));
+                options.UseSqlServer(connectionString));
 
             var app = builder.Build();
 
+            // Configure middleware
             if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseDeveloperExceptionPage(); // better for dev
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Betterboxd API V1");
                 });
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
+            // MVC default route
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -44,7 +53,7 @@ namespace Betterboxd
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                db.Database.EnsureCreated();
+                db.Database.Migrate(); 
             }
 
             app.Run();
