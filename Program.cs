@@ -16,7 +16,7 @@ namespace Betterboxd
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlite(connectionString));
+             options.UseSqlServer(connectionString));
 
             var app = builder.Build();
 
@@ -43,7 +43,11 @@ namespace Betterboxd
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                db.Database.Migrate();
+            }
             app.Run();
         }
     }
