@@ -1,0 +1,65 @@
+﻿@model Betterboxd.Models.Actor
+
+@{
+    ViewData["Title"] = "Create Actor";
+}
+
+<h1>Create Actor</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Name" class="form-control bg-dark text-light" placeholder="Name" />
+                <label asp-for="Name">Name</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label d-block">Gender</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" asp-for="Gender" value="Male" id="genderMale" />
+                    <label class="form-check-label text-light" for="genderMale">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" asp-for="Gender" value="Female" id="genderFemale" />
+                    <label class="form-check-label text-light" for="genderFemale">Female</label>
+                </div>
+                <span asp-validation-for="Gender" class="text-danger d-block"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Age" class="form-control bg-dark text-light" placeholder="Age" />
+                <label asp-for="Age">Age</label>
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="ImdbUrl" class="form-control bg-dark text-light" placeholder="IMDB URL" />
+                <label asp-for="ImdbUrl">IMDB URL</label>
+                <span asp-validation-for="ImdbUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="PhotoUrl" class="form-control bg-dark text-light" placeholder="Photo URL" />
+                <label asp-for="PhotoUrl">Photo URL</label>
+                <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

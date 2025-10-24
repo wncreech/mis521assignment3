@@ -1,0 +1,42 @@
+﻿@model Betterboxd.Models.SentimentViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Model.QueryTitle</h1>
+
+<div>
+    <h4>Sentiment Analysis</h4>
+    <hr />
+    <p><strong>Overall Sentiment:</strong> <span class="fw-bold">@Model.OverallSentiment</span></p>
+    <p><strong>Average Score:</strong> <span class="fw-bold">@Model.AverageScore</span></p>
+
+    <h3>Top Reddit Comments</h3>
+    <h6 class="text-muted">Betterboxd takes no responsibility for inappropriate content.</h6>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Comment</th>
+                <th>Sentiment</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comment in Model.Comments)
+            {
+                var rowClass = comment.Label.ToLower() == "positive" ? "table-success" : "table-danger";
+                    <tr class="@rowClass">
+                        <td>@comment.Text</td>
+                        <td class="fw-bold">@comment.Label</td>
+                        <td>@comment.Score</td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

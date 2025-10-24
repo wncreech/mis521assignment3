@@ -1,0 +1,63 @@
+﻿@model Betterboxd.Models.Movie
+
+@{
+    ViewData["Title"] = "Create Movie";
+}
+
+<h1>Create Movie</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="title" class="form-control bg-dark text-light" placeholder="Title" />
+                <label asp-for="title">Title</label>
+                <span asp-validation-for="title" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="genre" class="form-control bg-dark text-light" placeholder="Genre" />
+                <label asp-for="genre">Genre</label>
+                <span asp-validation-for="genre" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="year" class="form-control bg-dark text-light" placeholder="Year" />
+                <label asp-for="year">Year</label>
+                <span asp-validation-for="year" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="imdbUrl" class="form-control bg-dark text-light" placeholder="IMDB URL" />
+                <label asp-for="imdbUrl">IMDB URL</label>
+                <span asp-validation-for="imdbUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="posterUrl" class="form-control bg-dark text-light" placeholder="Poster URL" />
+                <label asp-for="posterUrl">Poster URL</label>
+                <span asp-validation-for="posterUrl" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Actors</label>
+                <select name="selectedActors" multiple class="form-select bg-dark text-light" size="6" asp-items="ViewBag.Actors"></select>
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary ms-2">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Betterboxd.Models.Movie>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h1>Movies</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+                Year
+            </th>
+            <th>
+                IMDB
+            </th>
+            <th>
+                Poster
+            </th>
+            <th>Actors</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.year)
+            </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.imdbUrl))
+                    {
+                        <a href="@item.imdbUrl" target="_blank">IMDB</a>
+                    }
+                    else
+                    {
+                        <em>N/A</em>
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.posterUrl))
+                    {
+                        <img src="@item.posterUrl" alt="@item.title poster" width="100" style="border-radius:8px;" />
+                    }
+                    else
+                    {
+                        <em>No image</em>
+                    }
+                </td>
+             <td>
+             @if (item.Actors != null && item.Actors.Any())
+             {
+               <ul>
+                 @foreach (var actor in item.Actors)
+                  {
+                   <li>@actor.Name</li>
+                   }
+                </ul>
+                        }
+                        else
+                        {
+                            <em>No actors linked</em>
+                        }
+             </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.id" class="btn btn-sm btn-primary">Analytics</a> 
+                <a asp-action="Edit" asp-route-id="@item.id" class="btn btn-sm btn-secondary">Edit</a> 
+                <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-sm btn-secondary">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
