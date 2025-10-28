@@ -38,7 +38,7 @@ namespace Betterboxd.Controllers
                 return NotFound();
 
             var sentimentService = new SentimentService(Environment.GetEnvironmentVariable("HUGGINGFACE_API_KEY"));
-            var (results, overall, average) = await sentimentService.AnalyzeSentimentForQueryAsync(movie.title, "movie" + " " + movie.year);
+            var (results, overall, average) = await sentimentService.AnalyzeSentimentForQueryAsync(movie.title, " " + movie.year);
 
             var viewModel = new SentimentViewModel
             {
